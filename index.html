@@ -116,7 +116,7 @@
        jsonObj.role = $("#roleToggle").data("role");
       //console.log(  JSON.stringify(jsonObj) );
 
-      $.post( "https://oqjjgbytr1.execute-api.eu-west-1.amazonaws.com/Prod/agreement", JSON.stringify(jsonObj), function( result ) {
+      $.post( "https://oqjjgbytr1.execute-api.eu-west-1.amazonaws.com/Prod/serverlessrepo-agree-exch-microservicehttpendpoint-1TW4GGCVB279V", JSON.stringify(jsonObj), function( result ) {
         $( "#generateUrl" ).toggleClass("hidden");
         $( "#generatedUrl" ).toggleClass("hidden");
         $( "#generatedUrl" ).text( "WORK IN PROGRESS!" );
