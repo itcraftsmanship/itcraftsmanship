@@ -171,11 +171,9 @@
     <script src="js/main.js"></script>
 
     <script>
-    $.ajaxSetup({
-      'beforeSend' : function(xhr) {
-          xhr.overrideMimeType('application/json; charset=utf-8');
-      },
-    });
+     $.ajaxSetup({
+       contentType: "application/json; charset=utf-8"
+     });
 
      $( "#submitForm" ).submit(function( event ) {
        var data = $("#submitForm").serializeArray();
