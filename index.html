@@ -101,7 +101,7 @@
              <li class="features">You control the minimum price you could accept</li>
              <li class="features">We keep the inputs confidential for both sides</li>
              <li class="features">We only show the agreement price, if any</li>
-             <li class="features last btn btn-secondary btn-wide"><a href="#invite">I'm selling</a></li>
+             <li class="features last btn btn-secondary btn-wide"><a href="#invite" onclick="setSelling()">I'm selling</a></li>
            </ul>
          </div>
 
@@ -115,7 +115,7 @@
             <li class="features">Decide how much you want to earn at minimum</li>
             <li class="features">If you go too high you risk no agreement</li>
             <li class="features">You get the settled amount in one go, no process</li>
-            <li class="features last btn btn-secondary btn-wide"><a href="#invite">I'm selling</a></li>
+            <li class="features last btn btn-secondary btn-wide"><a href="#invite" onclick="setSelling()">I'm selling</a></li>
           </ul>
         </div>
 
@@ -129,7 +129,7 @@
              <li class="features">You decide what is your maximum budget</li>
              <li class="features">If you go too low you risk no agreement</li>
              <li class="features">We'll email you when the Landlord replies</li>
-             <li class="features last btn btn-secondary btn-wide"><a href="#invite">I'm buying</a></li>
+             <li class="features last btn btn-secondary btn-wide"><a href="#invite" onclick="setBuying()">I'm buying</a></li>
            </ul>
          </div>
 
@@ -196,20 +196,28 @@
 
     $("#roleArea").click(function( event ) {
       if($("#roleToggle").data("role") == "selling"){
-        $("#roleText").text("I'm buying");
-        $("#roleToggle").addClass("fa-toggle-on");
-        $("#roleToggle").removeClass("fa-toggle-off");
-        $("#roleToggle").data("role", "buying");
-        $("#amount").attr("placeholder","The maximum you can spend");
+        setBuying();
       } else {
-        $("#roleText").text("I'm selling");
-        $("#roleToggle").addClass("fa-toggle-off");
-        $("#roleToggle").removeClass("fa-toggle-on");
-        $("#roleToggle").data("role", "selling");
-        $("#amount").attr("placeholder","Your acceptable minimum");
+        setSelling();
       }
       event.preventDefault();
     });
+
+    function setSelling(){
+      $("#roleText").text("I'm selling");
+      $("#roleToggle").addClass("fa-toggle-off");
+      $("#roleToggle").removeClass("fa-toggle-on");
+      $("#roleToggle").data("role", "selling");
+      $("#amount").attr("placeholder","Your acceptable minimum");
+    }
+
+    function setBuying(){
+      $("#roleText").text("I'm buying");
+      $("#roleToggle").addClass("fa-toggle-on");
+      $("#roleToggle").removeClass("fa-toggle-off");
+      $("#roleToggle").data("role", "buying");
+      $("#amount").attr("placeholder","The maximum you can spend");
+    }
 
     </script>
 
