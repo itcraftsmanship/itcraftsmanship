@@ -493,7 +493,7 @@ footer {
 /*---------------Pricing Tables-------------------*/
 
 
-#pricing {
+#examples {
   background: #70cbce;
 }
 
@@ -595,6 +595,7 @@ footer {
 	color: #70cbce;
 	font-size: 14px;
 	letter-spacing: 1px;
+  display: block;
 }
 
 .pricing-container .btn {
