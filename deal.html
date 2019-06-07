@@ -129,18 +129,21 @@
 
        jsonObj.id = getId()
 
-      $.put( "https://oqjjgbytr1.execute-api.eu-west-1.amazonaws.com/Prod/serverlessrepo-agree-exch-microservicehttpendpoint-1TW4GGCVB279V", JSON.stringify(jsonObj), function( result ) {
-        $( "#acceptTerms" ).toggleClass("hidden");
+       $.ajax({
+        type: "PUT",
+        url: "https://oqjjgbytr1.execute-api.eu-west-1.amazonaws.com/Prod/serverlessrepo-agree-exch-microservicehttpendpoint-1TW4GGCVB279V",
+        data: JSON.stringify(jsonObj),
+        success: function( result ) {
+          $( "#acceptTerms" ).toggleClass("hidden");
 
-        if(result.outcome == 'success'){
-          $( "#outcomeSuccess" ).toggleClass("hidden");
-          $( "#outcomeAmount" ).text( result.amount );
-        }else{
-          $( "#outcomeFailure" ).toggleClass("hidden");
+          if(result.outcome == 'success'){
+            $( "#outcomeSuccess" ).toggleClass("hidden");
+            $( "#outcomeAmount" ).text( result.amount );
+          }else{
+            $( "#outcomeFailure" ).toggleClass("hidden");
+          }
         }
-
       });
-
       event.preventDefault();
      });
 
