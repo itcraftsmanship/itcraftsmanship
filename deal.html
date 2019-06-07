@@ -133,7 +133,7 @@
         type: "PUT",
         url: "https://oqjjgbytr1.execute-api.eu-west-1.amazonaws.com/Prod/serverlessrepo-agree-exch-microservicehttpendpoint-1TW4GGCVB279V",
         data: JSON.stringify(jsonObj),
-        success: function( PlainObject result, String textStatus, jqXHR jqXHR ) {
+        success: function(  result, textStatus, jqXHR ) {
           $( "#acceptTerms" ).toggleClass("hidden");
 
           if(result.outcome == 'success'){
