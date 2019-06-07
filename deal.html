@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <title>Agree Exchange</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <meta property="og:title" content="">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="">
+	<meta property="og:site_name" content="">
+	<meta property="og:description" content="">
+
+  <link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico">
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/all.min.css">
+  <link rel="stylesheet" href="css/animate.css">
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900|Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <script src="js/modernizr-2.7.1.js"></script>
+
+</head>
+
+<body>
+
+    <header>
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-6">
+            <a href="index.html"><img class="ae-logo" src="img/logo.png" alt="Agree Exchange"></a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="invite" class="pad-xs light-gray-bg">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-8 col-sm-offset-2 text-center">
+            <div class="row">
+              <br/>
+              <p class="black">You are required to enter your amount, confidentially. We will show immediately if there is a possible agreement. Once you accept terms you can't change the amount</p>
+              <br />
+            </div>
+            <div class="row">
+              <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+                <form role="form" id="submitForm">
+                  <div class="form-group">
+                    <input required type="number" name="amount" class="form-control" step=".01" id="amount" placeholder="Your acceptable amount">
+                  </div>
+                  <button type="submit" id="acceptTerms" class="btn btn-primary btn-lg">Accept terms</button>
+                  <br>
+                  <h3 class="hidden" id="outcomeSuccess">Congratulations. A deal has been agreed at <strong id="outcomeAmount"></strong></h3>
+                  <h3 class="hidden" id="outcomeFailure">We are sorry. It looks that it's impossible to agree given the input of both sides</h3>
+                </form>
+              </div>
+            </div><!--End Form row-->
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="main-info" class="pad-xs">
+	    <div class="container">
+		    <div class="row">
+			    <div class="col-sm-4 wow fadeIn" data-wow-delay="0.4s">
+				    <hr class="line purple">
+				    <h3>Hate talking about money?</h3>
+				    <p>Looking for a job offer or to sale some stuff? Lots of people find talking about money stressing. Send your price tag <em>confidentially</em>, we will never disclose it to the other party.</p>
+			    </div>
+			    <div class="col-sm-4 wow fadeIn" data-wow-delay="0.8s">
+				    <hr class="line blue">
+				    <h3>How does it work?</h3>
+				    <p>Submit the form and share the generated url with the interested party. They will be asked to enter their amount too, but only once. We'll then email you if there is an agreement!</p>
+			    </div>
+			    <div class="col-sm-4 wow fadeIn" data-wow-delay="1.2s">
+				    <hr class="line yellow">
+				    <h3>Meet me in the middle?</h3>
+				    <p>Our algorithm will calculate if there is a possible fair outcome for both parties. It's supposed to be <em>binding</em> so we recommend both parties to refuse any further attempt to renegotiate the established amount.
+            </p>
+			    </div>
+		    </div>
+	    </div>
+    </section>
+
+    <!-- Javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.0.min.js"><\/script>')</script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+     $.ajaxSetup({
+       contentType: "application/json; charset=utf-8"
+     });
+
+
+     var params = new window.URLSearchParams(window.location.search);
+
+     function getId(){
+       var id = params.get('id');
+       if( id == null ){
+         error();
+       }else{
+         return id;
+       }
+     }
+
+     function error(){
+       console.log("ERROR IN URL")
+     }
+
+     $( "#submitForm" ).submit(function( event ) {
+       var data = $("#submitForm").serializeArray();
+       var jsonObj = {};
+
+       $.map(data , function (n, i) {
+         jsonObj[n.name] = n.value;
+       });
+
+       jsonObj.id = getId()
+
+      $.put( "https://oqjjgbytr1.execute-api.eu-west-1.amazonaws.com/Prod/serverlessrepo-agree-exch-microservicehttpendpoint-1TW4GGCVB279V", JSON.stringify(jsonObj), function( result ) {
+        $( "#acceptTerms" ).toggleClass("hidden");
+
+        if(result.outcome == 'success'){
+          $( "#outcomeSuccess" ).toggleClass("hidden");
+          $( "#outcomeAmount" ).text( result.amount );
+        }else{
+          $( "#outcomeFailure" ).toggleClass("hidden");
+        }
+
+      });
+
+      event.preventDefault();
+     });
+
+    $("#roleArea").click(function( event ) {
+      if($("#roleToggle").data("role") == "selling"){
+        setBuying();
+      } else {
+        setSelling();
+      }
+      event.preventDefault();
+    });
+
+    function setSelling(){
+      $("#roleText").text("I'm selling");
+      $("#roleToggle").addClass("fa-toggle-off");
+      $("#roleToggle").removeClass("fa-toggle-on");
+      $("#roleToggle").data("role", "selling");
+      $("#amount").attr("placeholder","Your acceptable minimum");
+    }
+
+    function setBuying(){
+      $("#roleText").text("I'm buying");
+      $("#roleToggle").addClass("fa-toggle-on");
+      $("#roleToggle").removeClass("fa-toggle-off");
+      $("#roleToggle").data("role", "buying");
+      $("#amount").attr("placeholder","The maximum you can spend");
+    }
+
+    </script>
+
+    </body>
+</html>
