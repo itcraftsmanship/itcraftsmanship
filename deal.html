@@ -107,7 +107,7 @@
      var params = new window.URLSearchParams(window.location.search);
 
      function getId(){
-       var id = params.get('id');
+       var id = window.location.hash.substr(1)
        if( id == null ){
          error();
        }else{
