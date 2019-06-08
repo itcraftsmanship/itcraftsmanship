@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <title>Agree Exchange</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <meta property="og:title" content="">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="">
+	<meta property="og:site_name" content="">
+	<meta property="og:description" content="">
+
+  <link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico">
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/all.min.css">
+  <link rel="stylesheet" href="css/animate.css">
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900|Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <script src="js/modernizr-2.7.1.js"></script>
+
+</head>
+
+<body>
+
+    <header>
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-6">
+            <a href="index.html"><img class="ae-logo" src="img/logo.png" alt="Agree Exchange"></a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="main-info" class="pad-xs">
+	    <div class="container">
+		    <div class="row margin-side-0">
+			    <div class="wow fadeIn" data-wow-delay="0.4s">
+				    <hr class="line purple">
+				    <h3>MISSION</h3>
+				    <p>Agree.exchange is a platform to help people reach agreements easier.</p>
+			    </div>
+			    <div class="wow fadeIn" data-wow-delay="0.8s">
+				    <hr class="line blue">
+				    <h3>HOW</h3>
+				    <p>There are two roles in the platform, SELLER and BUYER.
+            <br><br>1) The SELLER submits a FINAL OFFER including the MINIMUM AMOUNT that could accept and his email, generating a LINK.
+            <br><br>2) The SELLER shares that LINK and] the BUYER then enters the MAXIMUM AMOUNT willing to pay.
+            <br><br>3)A FINAL outcome is immediately provided that SATISFIES both parties, sending the SELLER an email notification and invalidating the link.</p>
+			    </div>
+			    <div class="wow fadeIn" data-wow-delay="1.2s">
+				    <hr class="line yellow">
+				    <h3>WHY</h3>
+				    <p>Negotiating is a skill and not everybody have it. While solving a conflict of interest may result in some relief, wouldn't be better if we avoid the conflict entirely?
+            </p>
+			    </div>
+		    </div>
+	    </div>
+    </section>
+
+    <section id="invite" class="pad-xs light-gray-bg">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-8 col-sm-offset-2 text-center">
+            <h2 class="black">Submit final offer</h2>
+            <div class="row">
+            </div>
+            <div class="row">
+              <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+                <form role="form" id="submitForm">
+                  <div class="form-group">
+                    <input required type="email" name="email" class="form-control" id="senderEmail" placeholder="Your email (as seller)">
+                    <input required type="number" name="amount" class="form-control" step=".01" id="amount" placeholder="Your acceptable minimum">
+                  </div>
+                  <button type="submit" id="generateUrl" class="btn btn-primary btn-lg">Generate Link</button>
+                  <br>
+                  <p class="hidden" id="generatedUrl" ></p>
+                </form>
+              </div>
+            </div><!--End Form row-->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.0.min.js"><\/script>')</script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+     $.ajaxSetup({
+       contentType: "application/json; charset=utf-8"
+     });
+
+     $( "#submitForm" ).submit(function( event ) {
+       var data = $("#submitForm").serializeArray();
+       var jsonObj = {};
+       $.map(data , function (n, i) {
+         jsonObj[n.name] = n.value;
+       });
+       jsonObj.role = $("#roleToggle").data("role");
+
+      $.post( "https://oqjjgbytr1.execute-api.eu-west-1.amazonaws.com/Prod/serverlessrepo-agree-exch-microservicehttpendpoint-1TW4GGCVB279V", JSON.stringify(jsonObj), function( result ) {
+        $( "#generateUrl" ).toggleClass("hidden");
+        $( "#generatedUrl" ).toggleClass("hidden");
+        var role = $("#roleToggle").data("role") == "selling" ? "Buyer" : "Seller";
+        $( "#generatedUrl" ).text( "Share this link with the " + role + " :  " + result.url );
+      });
+
+      event.preventDefault();
+     });
+
+    $("#roleArea").click(function( event ) {
+      if($("#roleToggle").data("role") == "selling"){
+        setBuying();
+      } else {
+        setSelling();
+      }
+      event.preventDefault();
+    });
+
+    function setSelling(){
+      $("#roleText").text("I'm selling");
+      $("#roleToggle").addClass("fa-toggle-off");
+      $("#roleToggle").removeClass("fa-toggle-on");
+      $("#roleToggle").data("role", "selling");
+      $("#amount").attr("placeholder","Your acceptable minimum");
+    }
+
+    function setBuying(){
+      $("#roleText").text("I'm buying");
+      $("#roleToggle").addClass("fa-toggle-on");
+      $("#roleToggle").removeClass("fa-toggle-off");
+      $("#roleToggle").data("role", "buying");
+      $("#amount").attr("placeholder","The maximum you can spend");
+    }
+
+    </script>
+
+    </body>
+</html>

@@ -11,6 +11,10 @@
 /* ==========================================================================
    Global styles
    ========================================================================== */
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
 h1, h2, h3, h4, h5, h6, p, .btn, .navbar-nav a, .form-control, .list-inline, small, #pricing {
   font-family: 'Montserrat', sans-serif;
 }
@@ -158,6 +162,12 @@ a:hover, a:focus {
 
 
 /*-----------------Margins------------------*/
+.margin-side-0 {
+  margin-right:0 !important;
+  margin-left: 0 !important;
+}
+
+
 .margin-0 {
     margin-bottom: 0 !important;
 }
