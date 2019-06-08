@@ -212,6 +212,14 @@ a:hover, a:focus {
   color: #231f20;
 }
 
+.red {
+  color: #cc0000;
+}
+
+.gray{
+  color: #464646;
+}
+
 .blue {
   color: #70cbce;
 }
