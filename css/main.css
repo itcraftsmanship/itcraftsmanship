@@ -489,6 +489,10 @@ hr.line {
   padding-right: 20px;
 }
 
+.icon-spacing-left-15 {
+  padding-left: 15px;
+}
+
 .icon-spacing-left {
   padding-left: 20px;
 }
@@ -496,8 +500,11 @@ hr.line {
 .icon-spacing-right {
   padding-right: 20px;
 }
-
+.icon-spacing-right-extra {
+  padding-right: 35px;
+}
 .explain-icon{
+  color:  #929496;
   font-size: 40px;
 }
 
