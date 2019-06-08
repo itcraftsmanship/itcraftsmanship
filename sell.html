@@ -144,8 +144,7 @@
       $.post( "https://oqjjgbytr1.execute-api.eu-west-1.amazonaws.com/Prod/serverlessrepo-agree-exch-microservicehttpendpoint-1TW4GGCVB279V", JSON.stringify(jsonObj), function( result ) {
         $( "#generateUrl" ).toggleClass("hidden");
         $( "#generatedUrl" ).toggleClass("hidden");
-        var role = $("#roleToggle").data("role") == "selling" ? "Buyer" : "Seller";
-        $( "#generatedUrl" ).text( "Share this link with the " + role + " :  " + result.url );
+        $( "#generatedUrl" ).text( "Share this link with the Buyer :  <br>" + result.url );
       });
 
       event.preventDefault();
