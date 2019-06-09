@@ -217,7 +217,8 @@ a:hover, a:focus {
 }
 
 .gray{
-  color: #464646;
+  #color: #464646;
+  color:  #929496;
 }
 
 .blue {
@@ -468,6 +469,7 @@ hr.line {
   border: none;
 }
 
+
 .fa-handshake {
   color: #4ec3cd;
   font-size: 22px;
@@ -512,7 +514,6 @@ hr.line {
   padding-right: 35px;
 }
 .explain-icon{
-  color:  #929496;
   font-size: 40px;
 }
 
